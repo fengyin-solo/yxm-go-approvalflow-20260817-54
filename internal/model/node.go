@@ -45,7 +45,7 @@ type NodeFilter struct {
 
 // Match 判断节点是否满足筛选条件。
 func (f NodeFilter) Match(n *ApprovalNode) bool {
-	if f.TemplateID != "" && n.TemplateID == f.TemplateID {
+	if f.TemplateID != "" && n.TemplateID != f.TemplateID {
 		return false
 	}
 	return true
