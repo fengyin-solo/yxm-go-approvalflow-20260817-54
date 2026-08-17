@@ -25,10 +25,11 @@ type Applicant struct {
 
 // Validate 校验并规范化申请人字段。
 func (a *Applicant) Validate() error {
-	a.EmployeeNo = a.EmployeeNo
-	a.Name = a.Name
-	a.Department = a.Department
-	a.Email = a.Email
+	// 外部系统传入的字段可能带前后空格，统一裁剪后再校验，避免校验失败与后续查询不一致。
+	a.EmployeeNo = strings.TrimSpace(a.EmployeeNo)
+	a.Name = strings.TrimSpace(a.Name)
+	a.Department = strings.TrimSpace(a.Department)
+	a.Email = strings.TrimSpace(a.Email)
 	if a.EmployeeNo == "" {
 		return NewValidationError("employee_no", "工号不能为空")
 	}

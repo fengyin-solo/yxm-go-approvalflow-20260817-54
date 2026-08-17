@@ -44,11 +44,12 @@ type ApprovalRequest struct {
 
 // Validate 校验审批单字段。
 func (r *ApprovalRequest) Validate() error {
-	r.SerialNo = r.SerialNo
-	r.TemplateID = r.TemplateID
-	r.ApplicantID = r.ApplicantID
-	r.Title = r.Title
-	r.Reason = r.Reason
+	// 外部系统传入的字段可能带前后空格，统一裁剪后再校验，避免校验失败与后续查询不一致。
+	r.SerialNo = strings.TrimSpace(r.SerialNo)
+	r.TemplateID = strings.TrimSpace(r.TemplateID)
+	r.ApplicantID = strings.TrimSpace(r.ApplicantID)
+	r.Title = strings.TrimSpace(r.Title)
+	r.Reason = strings.TrimSpace(r.Reason)
 	if r.SerialNo == "" {
 		return NewValidationError("serial_no", "流水号不能为空")
 	}

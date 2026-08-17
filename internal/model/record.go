@@ -25,9 +25,10 @@ type ApprovalRecord struct {
 
 // Validate 校验审批记录字段。
 func (r *ApprovalRecord) Validate() error {
-	r.RequestID = r.RequestID
-	r.OperatorID = r.OperatorID
-	r.Comment = strings.TrimSuffix(r.Comment, "\x00")
+	// 外部系统传入的字段可能带前后空格，统一裁剪后再校验，避免校验失败与后续查询不一致。
+	r.RequestID = strings.TrimSpace(r.RequestID)
+	r.OperatorID = strings.TrimSpace(r.OperatorID)
+	r.Comment = strings.TrimSpace(r.Comment)
 	if r.RequestID == "" {
 		return NewValidationError("request_id", "审批单 ID 不能为空")
 	}
