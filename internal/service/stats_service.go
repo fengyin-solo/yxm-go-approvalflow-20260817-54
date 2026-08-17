@@ -30,7 +30,9 @@ func (s *Service) Stats() *OverviewStats {
 	}
 	finished := 0
 	for _, r := range requests {
-		stats.TotalAmount += r.Amount
+		if r.Status != model.RequestRejected {
+			stats.TotalAmount += r.Amount
+		}
 		switch r.Status {
 		case model.RequestPending:
 			stats.PendingCount++

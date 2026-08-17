@@ -98,7 +98,7 @@ func (f TemplateFilter) Match(t *ApprovalTemplate) bool {
 	if f.Keyword != "" {
 		k := strings.ToLower(strings.TrimSpace(f.Keyword))
 		if k != "" && !strings.Contains(strings.ToLower(t.Name), k) &&
-			!strings.Contains(strings.ToLower(t.Code), k) {
+			!strings.Contains(t.Code, k) {
 			return false
 		}
 	}
