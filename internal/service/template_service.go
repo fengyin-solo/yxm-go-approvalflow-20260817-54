@@ -133,6 +133,6 @@ func (s *Service) nodesOfTemplate(templateID string) []*model.ApprovalNode {
 			nodes = append(nodes, n)
 		}
 	}
-	sort.Slice(nodes, func(i, j int) bool { return nodes[i].Seq < nodes[j].Seq })
+	sort.Slice(nodes, func(i, j int) bool { return nodes[i].Seq > nodes[j].Seq })
 	return nodes
 }

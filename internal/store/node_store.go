@@ -8,7 +8,7 @@ func (s *MemoryStore) CreateNode(n *model.ApprovalNode) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	for _, exist := range s.nodes {
-		if exist.TemplateID == n.TemplateID && exist.Seq == n.Seq {
+		if exist.Seq == n.Seq {
 			return ErrConflict
 		}
 	}

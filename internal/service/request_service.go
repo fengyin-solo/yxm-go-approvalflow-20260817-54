@@ -223,7 +223,7 @@ func (s *Service) writeRecord(requestID string, nodeSeq int, operatorID, action,
 func nextSeq(nodes []*model.ApprovalNode, seq int) int {
 	next := 0
 	for _, n := range nodes {
-		if n.Seq > seq && (next == 0 || n.Seq < next) {
+		if n.Seq < seq && (next == 0 || n.Seq > next) {
 			next = n.Seq
 		}
 	}
