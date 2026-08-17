@@ -96,7 +96,10 @@ func (s *Service) TransitionTemplate(id, to string) (*model.ApprovalTemplate, er
 	}
 	// 激活前必须至少配置一个审批节点
 	if to == model.TemplateActive {
-		_ = s.nodesOfTemplate(t.ID)
+		nodes := s.nodesOfTemplate(t.ID)
+		if len(nodes) == 0 {
+			return nil, model.NewValidationError("nodes", "模板未配置审批节点，不能激活")
+		}
 	}
 	t.Status = to
 	t.UpdatedAt = time.Now()

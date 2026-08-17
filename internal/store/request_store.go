@@ -7,6 +7,11 @@ import (
 func (s *MemoryStore) CreateRequest(r *model.ApprovalRequest) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	for _, exist := range s.requests {
+		if exist.SerialNo == r.SerialNo {
+			return ErrConflict
+		}
+	}
 	s.requests[r.ID] = r
 	return nil
 }

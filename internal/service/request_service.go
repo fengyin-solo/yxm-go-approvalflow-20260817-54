@@ -23,6 +23,7 @@ func (s *Service) SubmitRequest(templateID, applicantID, title, reason string, a
 		return nil, err
 	}
 	if applicant.Status != model.ApplicantActive {
+		return nil, model.NewValidationError("applicant", "申请人已停用，不能发起审批")
 	}
 	nodes := s.nodesOfTemplate(templateID)
 	if len(nodes) == 0 {
