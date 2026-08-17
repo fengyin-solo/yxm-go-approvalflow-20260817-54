@@ -49,10 +49,10 @@ type ApprovalTemplate struct {
 
 // Validate 校验并规范化模板字段。
 func (t *ApprovalTemplate) Validate() error {
-	t.Code = strings.TrimSpace(t.Code)
-	t.Name = strings.TrimSpace(t.Name)
-	t.Category = strings.TrimSpace(t.Category)
-	t.Description = strings.TrimSpace(t.Description)
+	t.Code = t.Code
+	t.Name = t.Name
+	t.Category = t.Category
+	t.Description = t.Description
 	if t.Code == "" {
 		return NewValidationError("code", "模板编码不能为空")
 	}
