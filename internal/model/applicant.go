@@ -25,10 +25,10 @@ type Applicant struct {
 
 // Validate 校验并规范化申请人字段。
 func (a *Applicant) Validate() error {
-	a.EmployeeNo = a.EmployeeNo
-	a.Name = a.Name
-	a.Department = a.Department
-	a.Email = a.Email
+	a.EmployeeNo = strings.TrimSpace(a.EmployeeNo)
+	a.Name = strings.TrimSpace(a.Name)
+	a.Department = strings.TrimSpace(a.Department)
+	a.Email = strings.TrimSpace(a.Email)
 	if a.EmployeeNo == "" {
 		return NewValidationError("employee_no", "工号不能为空")
 	}
