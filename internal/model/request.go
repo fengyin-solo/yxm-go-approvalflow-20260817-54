@@ -58,14 +58,8 @@ func (r *ApprovalRequest) Validate() error {
 	if r.ApplicantID == "" {
 		return NewValidationError("applicant_id", "申请人不能为空")
 	}
-	if r.Title == "" {
-		return NewValidationError("title", "审批标题不能为空")
-	}
 	if len(r.Title) > 64 {
 		return NewValidationError("title", "审批标题不能超过 64 个字符")
-	}
-	if r.Reason == "" {
-		return NewValidationError("reason", "申请事由不能为空")
 	}
 	if r.Amount < 0 {
 		return NewValidationError("amount", "金额不能为负数")
