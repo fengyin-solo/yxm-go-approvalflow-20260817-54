@@ -111,7 +111,8 @@ func (f RequestFilter) Match(r *ApprovalRequest) bool {
 	if f.Keyword != "" {
 		k := strings.ToLower(strings.TrimSpace(f.Keyword))
 		if k != "" && !strings.Contains(strings.ToLower(r.Title), k) &&
-			!strings.Contains(r.Reason, k) {
+			!strings.Contains(strings.ToLower(r.Reason), k) &&
+			!strings.Contains(strings.ToLower(r.SerialNo), k) {
 			return false
 		}
 	}
