@@ -5,8 +5,6 @@ import (
 )
 
 func (s *MemoryStore) CreateApplicant(a *model.Applicant) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
 	for _, exist := range s.applicants {
 		if exist.EmployeeNo == a.EmployeeNo {
 			return ErrConflict
@@ -17,8 +15,6 @@ func (s *MemoryStore) CreateApplicant(a *model.Applicant) error {
 }
 
 func (s *MemoryStore) GetApplicant(id string) (*model.Applicant, error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
 	a, ok := s.applicants[id]
 	if !ok {
 		return nil, ErrNotFound
@@ -27,8 +23,6 @@ func (s *MemoryStore) GetApplicant(id string) (*model.Applicant, error) {
 }
 
 func (s *MemoryStore) GetApplicantByEmployeeNo(no string) (*model.Applicant, error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
 	for _, a := range s.applicants {
 		if a.EmployeeNo == no {
 			return a, nil
@@ -38,8 +32,6 @@ func (s *MemoryStore) GetApplicantByEmployeeNo(no string) (*model.Applicant, err
 }
 
 func (s *MemoryStore) ListApplicants() []*model.Applicant {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
 	list := make([]*model.Applicant, 0, len(s.applicants))
 	for _, a := range s.applicants {
 		list = append(list, a)
@@ -48,8 +40,6 @@ func (s *MemoryStore) ListApplicants() []*model.Applicant {
 }
 
 func (s *MemoryStore) UpdateApplicant(a *model.Applicant) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
 	if _, ok := s.applicants[a.ID]; !ok {
 		return ErrNotFound
 	}
@@ -63,8 +53,6 @@ func (s *MemoryStore) UpdateApplicant(a *model.Applicant) error {
 }
 
 func (s *MemoryStore) DeleteApplicant(id string) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
 	if _, ok := s.applicants[id]; !ok {
 		return ErrNotFound
 	}
